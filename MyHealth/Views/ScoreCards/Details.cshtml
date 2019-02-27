@@ -1,0 +1,50 @@
+﻿@model MyHealth.Models.ScoreCard
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ScoreCard</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ScoretDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScoretDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DayScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DayScore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeekScore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalScore)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

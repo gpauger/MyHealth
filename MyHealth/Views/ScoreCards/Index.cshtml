@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MyHealth.Models.ScoreCard>
+
+@{
+    ViewBag.Title = "Recent Scores";
+}
+@Html.Partial("~/Views/ScoreCards/_Scores.cshtml")
+<h2>Recent Scores</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Score Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Day Score", "Index", new { sortOrder = ViewBag.DayScoreSortParm })
+        </th>
+        <th>
+            Week Score
+        </th>
+        <th>
+            Total Score
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScoretDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayScore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeekScore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalScore)
+            </td>
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>*@
+        </tr>
+    }
+
+</table>
+
+
