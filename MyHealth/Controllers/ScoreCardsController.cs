@@ -56,9 +56,9 @@ namespace MyHealth.Controllers
                 ScoretDate = date,
                 DayScore =  (11 - Convert.ToInt16(log.Bedtime))*5 +
                             Convert.ToInt16(log.Meditation) +
-                            Convert.ToInt16(log.Read) +
+                            Convert.ToInt16(log.Read)/2 +
                             Convert.ToInt16(log.Veggies)*3 +
-                            Convert.ToInt16(log.Exercise) -
+                            Convert.ToInt16(log.Exercise)*2 -
                             Convert.ToInt16(log.Alcohol)*10,
 
                 WeekScore = 0,
