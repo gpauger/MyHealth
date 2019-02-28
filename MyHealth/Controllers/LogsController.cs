@@ -16,9 +16,25 @@ namespace MyHealth.Controllers
         private UserContext db = new UserContext();
 
         // GET: Logs
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.Logs.ToList());
+            ViewBag.DateSortParm = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var logs = from s in db.Logs
+                         select s;
+            switch (sortOrder)
+            {
+                case "Date":
+                    logs = logs.OrderByDescending(s => s.LogtDate);
+                    break;
+                case "date_desc":
+                    logs = logs.OrderBy(s => s.LogtDate);
+                    break;
+                default:
+                    logs = logs.OrderByDescending(s => s.LogtDate);
+                    break;
+            }
+                    return View(logs.ToList());
         }
 
         // GET: Logs/Details/5
@@ -96,7 +112,8 @@ namespace MyHealth.Controllers
                 //attempt to update scorecard with changes to log 
                  
                 var controller = DependencyResolver.Current.GetService<ScoreCardsController>();
-                controller.CalculateUpdate(log);
+                controller.CalculateUpdate(log, log.user);
+                controller.UpdateDaily(log, log.LogtDate, log.user);
                 return RedirectToAction("Index");
             }
             return View(log);

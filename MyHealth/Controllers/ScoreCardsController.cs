@@ -8,15 +8,15 @@ using System.Web;
 using System.Web.Mvc;
 using MyHealth.DAL;
 using MyHealth.Models;
-using Microsoft.AspNet.Identity;
 
 namespace MyHealth.Controllers
 {
     public class ScoreCardsController : Controller
     {
         private UserContext db = new UserContext();
-       
-        public ActionResult CalculateDaily(Log log)
+    
+
+    public ActionResult CalculateDaily(Log log)
         {
             ScoreCard todayscore = new ScoreCard
             {
@@ -24,44 +24,52 @@ namespace MyHealth.Controllers
                 ScoretDate = log.LogtDate,
                 DayScore = Convert.ToInt16(log.Meditation + log.Read + log.Veggies + log.Exercise - log.Alcohol),
                 WeekScore = 0,
-                TotalScore = 0
+                TotalScore = 0, 
+              
         };
             Create(todayscore);
             return View("Index");
         }
         //used for updateing scorecards after log changes
+        public ActionResult CalculateUpdate(Log log, User user)
+        {
+            var scores = db.ScoreCards;
+            foreach (ScoreCard s in scores)
+            {
+                if (s.ScoretDate.Date == log.LogtDate.Date)
+                {
+                    
+                    db.ScoreCards.Remove(s);
+                    //db.SaveChanges();
+                }
+              
+            };
+
+            return View("Index");
+        }
+
         public ActionResult UpdateDaily(Log log, DateTime date, User loguser)
         {
             ScoreCard todayscore = new ScoreCard
             {
 
                 ScoretDate = date,
-                DayScore = Convert.ToInt16(log.Meditation + log.Read + log.Veggies + log.Exercise - log.Alcohol),
+                DayScore =  (11 - Convert.ToInt16(log.Bedtime))*5 +
+                            Convert.ToInt16(log.Meditation) +
+                            Convert.ToInt16(log.Read) +
+                            Convert.ToInt16(log.Veggies)*3 +
+                            Convert.ToInt16(log.Exercise) -
+                            Convert.ToInt16(log.Alcohol)*10,
+
                 WeekScore = 0,
                 TotalScore = 0,
-                user = log.user
-                
+         
             };
             Create(todayscore);
             return View("Index");
         }
 
-        public ActionResult CalculateUpdate(Log log)
-        {
-            var scores = db.ScoreCards;
-                foreach (ScoreCard s in scores)
-            {
-                if (s.ScoretDate.Date == log.LogtDate.Date)
-                {
-                    UpdateDaily(log, log.LogtDate, log.user);
-                    db.ScoreCards.Remove(s);
-                    db.SaveChanges();
-                }
-         
-            };
-           
-            return View("Index");
-        }
+      
 
 
 

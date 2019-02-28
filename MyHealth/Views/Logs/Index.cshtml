@@ -12,7 +12,8 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LogtDate)
+            @Html.ActionLink("Log Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+            @*@Html.DisplayNameFor(model => model.LogtDate)*@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Bedtime)
