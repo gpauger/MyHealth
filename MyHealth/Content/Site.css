@@ -28,3 +28,10 @@ textarea {
     background-color: blue;
     
 }
+
+.navbar-custom{
+    background-color: forestgreen;
+}
+.navbar-brand{
+    color: whitesmoke;
+}

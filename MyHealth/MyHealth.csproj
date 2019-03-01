@@ -181,6 +181,7 @@
     <Compile Include="Models\ScoreCard.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ScoresViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -275,7 +276,7 @@
     <Content Include="Views\ScoreCards\Details.cshtml" />
     <Content Include="Views\ScoreCards\Edit.cshtml" />
     <Content Include="Views\ScoreCards\Index.cshtml" />
-    <Content Include="Views\ScoreCards\_Scores.cshtml" />
+    <Content Include="Views\Shared\_Scores.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />

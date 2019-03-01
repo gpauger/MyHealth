@@ -8,23 +8,64 @@ using System.Web;
 using System.Web.Mvc;
 using MyHealth.DAL;
 using MyHealth.Models;
+using MyHealth.ViewModels;
 
 namespace MyHealth.Controllers
 {
     public class ScoreCardsController : Controller
     {
         private UserContext db = new UserContext();
-    
 
-    public ActionResult CalculateDaily(Log log)
+        public ActionResult CalculateAverage()
         {
+
+            var scores = db.ScoreCards;
+            var TotalScore = 0;
+            var AverageScore = 0;
+            var count = scores.Count();
+            foreach (ScoreCard s in scores)
+            {
+                TotalScore = TotalScore + s.DayScore;
+                AverageScore = TotalScore / count;
+            };
+            ScoresViewModel svmodel = new ScoresViewModel
+            {
+                TotalScore = TotalScore,
+                AverageScore = AverageScore,
+                BestScore = 100,
+                WeeklyAverage = 500,
+                WeeklyBest = 300
+            };
+
+            return this.View(svmodel);
+
+        }
+
+
+
+        public ActionResult CalculateDaily(Log log)
+        {
+            var scores = db.ScoreCards;
+            var TotalScore = 0;
+            var AverageScore = 0;
+            var count = scores.Count();
+            foreach (ScoreCard s in scores)
+            {
+                TotalScore = TotalScore + s.DayScore;
+                AverageScore = TotalScore / count;
+            };
             ScoreCard todayscore = new ScoreCard
             {
 
                 ScoretDate = log.LogtDate,
-                DayScore = Convert.ToInt16(log.Meditation + log.Read + log.Veggies + log.Exercise - log.Alcohol),
+                DayScore = (11 - Convert.ToInt16(log.Bedtime)) * 5 +
+                            Convert.ToInt16(log.Meditation) +
+                            Convert.ToInt16(log.Read) / 2 +
+                            Convert.ToInt16(log.Veggies) * 3 +
+                            Convert.ToInt16(log.Exercise) * 2 -
+                            Convert.ToInt16(log.Alcohol) * 10,
                 WeekScore = 0,
-                TotalScore = 0, 
+                TotalScore = TotalScore 
               
         };
             Create(todayscore);
@@ -50,6 +91,15 @@ namespace MyHealth.Controllers
 
         public ActionResult UpdateDaily(Log log, DateTime date, User loguser)
         {
+            var scores = db.ScoreCards;
+            var TotalScore = 0;
+            var AverageScore = 0;
+            var count = scores.Count();
+            foreach (ScoreCard s in scores)
+            {
+                TotalScore = TotalScore + s.DayScore;
+                AverageScore = TotalScore / count;
+            };
             ScoreCard todayscore = new ScoreCard
             {
 
@@ -62,7 +112,7 @@ namespace MyHealth.Controllers
                             Convert.ToInt16(log.Alcohol)*10,
 
                 WeekScore = 0,
-                TotalScore = 0,
+                TotalScore = TotalScore,
          
             };
             Create(todayscore);

@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<MyHealth.Models.ScoreCard>
 
+
 @{
     ViewBag.Title = "Recent Scores";
 }
-@Html.Partial("~/Views/ScoreCards/_Scores.cshtml")
+
+
 <h2>Recent Scores</h2>
 
 
@@ -40,10 +42,10 @@
                 @Html.DisplayFor(modelItem => item.TotalScore)
             </td>
             @*<td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>*@
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>*@
         </tr>
     }
 
