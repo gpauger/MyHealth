@@ -17,5 +17,6 @@ namespace MyHealth.Models
         public double Read { get; set; }
 
         public virtual User user { get; set; }
+        public virtual ScoreCard ScoreCard { get; set; }
     }
 }

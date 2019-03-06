@@ -73,7 +73,8 @@ namespace MyHealth.Controllers
                 db.SaveChanges();
                 //added next 2 lines to create scorecard entry for each log
                 var controller = DependencyResolver.Current.GetService<ScoreCardsController>();
-                controller.CalculateDaily(log);
+                //controller.CalculateDaily(log);
+                controller.UpdateDaily(log, log.LogtDate, log.user);
                 return RedirectToAction("Index");
                 
                
@@ -140,8 +141,12 @@ namespace MyHealth.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Log log = db.Logs.Find(id);
+            ScoreCard scoreCard = db.ScoreCards.Find(id);
+            var controller = DependencyResolver.Current.GetService<ScoreCardsController>();
+            controller.Delete(scoreCard.ID);
             db.Logs.Remove(log);
             db.SaveChanges();
+            
             return RedirectToAction("Index");
         }
 

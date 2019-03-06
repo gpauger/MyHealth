@@ -96,3 +96,4 @@ C:\Users\Student\Dropbox\Tech Academy\C-LargeProjects\MyHealth\MyHealth\obj\Debu
 C:\Users\Student\Dropbox\Tech Academy\C-LargeProjects\MyHealth\MyHealth\obj\Debug\MyHealth.Migrations.InitialCreate.resources
 C:\Users\Student\Dropbox\Tech Academy\C-LargeProjects\MyHealth\MyHealth\obj\Debug\MyHealth.csproj.GenerateResource.cache
 C:\Users\Student\Dropbox\Tech Academy\C-LargeProjects\MyHealth\MyHealth\obj\Debug\MyHealth.Migrations.InitialCreate1.resources
+C:\Users\Student\Dropbox\Tech Academy\C-LargeProjects\MyHealth\MyHealth\obj\Debug\MyHealth.Migrations.Migration2.resources

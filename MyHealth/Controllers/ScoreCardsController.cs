@@ -16,28 +16,21 @@ namespace MyHealth.Controllers
     {
         private UserContext db = new UserContext();
 
-        public ActionResult CalculateAverage()
+        public ActionResult CalculateWeekTotal(Log log)
         {
-
+            var weektotal = 0;
             var scores = db.ScoreCards;
-            var TotalScore = 0;
-            var AverageScore = 0;
-            var count = scores.Count();
-            foreach (ScoreCard s in scores)
+            var weekcount = 0;
+            while (weekcount < 7)
             {
-                TotalScore = TotalScore + s.DayScore;
-                AverageScore = TotalScore / count;
-            };
-            ScoresViewModel svmodel = new ScoresViewModel
-            {
-                TotalScore = TotalScore,
-                AverageScore = AverageScore,
-                BestScore = 100,
-                WeeklyAverage = 500,
-                WeeklyBest = 300
-            };
-
-            return this.View(svmodel);
+                foreach (ScoreCard s in scores.Where(x => x.ScoretDate <= log.LogtDate))
+                {
+                    weektotal = weektotal + s.DayScore;
+                    weekcount = weekcount + 1;
+                };
+            }
+            
+            return this.View(weektotal);
 
         }
 
@@ -48,9 +41,10 @@ namespace MyHealth.Controllers
             var scores = db.ScoreCards;
             var TotalScore = 0;
             var AverageScore = 0;
-            var count = scores.Count();
-            foreach (ScoreCard s in scores)
+            var count = 0;
+            foreach (ScoreCard s in scores.Where(x => x.ScoretDate <= log.LogtDate))
             {
+                count = count +1;
                 TotalScore = TotalScore + s.DayScore;
                 AverageScore = TotalScore / count;
             };
@@ -64,7 +58,7 @@ namespace MyHealth.Controllers
                             Convert.ToInt16(log.Veggies) * 3 +
                             Convert.ToInt16(log.Exercise) * 2 -
                             Convert.ToInt16(log.Alcohol) * 10,
-                WeekScore = 0,
+                WeekScore = AverageScore,
                 TotalScore = TotalScore 
               
         };
@@ -94,26 +88,29 @@ namespace MyHealth.Controllers
             var scores = db.ScoreCards;
             var TotalScore = 0;
             var AverageScore = 0;
-            var count = scores.Count();
-            foreach (ScoreCard s in scores)
+            var count = 0;
+           
+            
+            foreach (ScoreCard s in scores.Where(x => x.ScoretDate <= log.LogtDate))
             {
+                count = count + 1;
                 TotalScore = TotalScore + s.DayScore;
                 AverageScore = TotalScore / count;
             };
+            var DayScore = (11 - Convert.ToInt16(log.Bedtime)) * 5 +
+                           Convert.ToInt16(log.Meditation) +
+                           Convert.ToInt16(log.Read) / 2 +
+                           Convert.ToInt16(log.Veggies) * 3 +
+                           Convert.ToInt16(log.Exercise) * 2 -
+                           Convert.ToInt16(log.Alcohol) * 10;
             ScoreCard todayscore = new ScoreCard
             {
 
                 ScoretDate = date,
-                DayScore =  (11 - Convert.ToInt16(log.Bedtime))*5 +
-                            Convert.ToInt16(log.Meditation) +
-                            Convert.ToInt16(log.Read)/2 +
-                            Convert.ToInt16(log.Veggies)*3 +
-                            Convert.ToInt16(log.Exercise)*2 -
-                            Convert.ToInt16(log.Alcohol)*10,
+                DayScore = DayScore,
+                WeekScore = AverageScore,
+                TotalScore = TotalScore + DayScore,
 
-                WeekScore = 0,
-                TotalScore = TotalScore,
-         
             };
             Create(todayscore);
             return View("Index");
